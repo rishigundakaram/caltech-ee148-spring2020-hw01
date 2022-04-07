@@ -144,19 +144,31 @@ def refine_boxes(boxes):
         final_boxes.append(cur_box)
     return final_boxes
 
+def alg_1(img): 
+    bounding_boxes = []
+    red = img[:, :, 0]
+    diameters = [i for i in range(6,8)]
+    for i in diameters:
+        kernel = circle_kernel(i)
+        out = convolve(kernel, red)
+        img = Image.fromarray(out)
+        img.show()
+    return bounding_boxes
+
+
 def combine_predictions(path): 
     predictions = os.listdir(path)
     predictions = [i for i in predictions if '.json' in i]
     preds = {}
     for cur in predictions: 
-        print(path + '/' + cur)
-        with 
-        cur_pred = json.load(path + '/' + cur)
-        print(cur_pred)
-        for key in cur_pred.keys(): 
-            preds[key] = cur_pred[key]
+        with open(path + '/' + cur) as f: 
+            cur_pred = json.load(f)
+        key = cur.strip('.json')
+        key += '.jpg'
+        preds[key] = cur_pred
     with open(path + '/pred.json', 'w') as f: 
         json.dump(preds, f)
+
 
 if __name__ == '__main__': 
     path = '../predictions'
