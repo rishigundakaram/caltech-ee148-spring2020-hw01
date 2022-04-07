@@ -13,3 +13,4 @@ To genereate the visuals in the report do:
 ```
 python report_visuals.py
 ```
+Be sure to change the parameters at the top of the file here as well. 
